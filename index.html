@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="#" alt="">
+    <button id="generate-new-image">Generate new image</button>
+    <input id="search-query" type="text">
+    <button id="search-new-gif">Search new gif!</button>
+    <script>
+        
+        function fetchNewImage(searchQuery) {
+            fetch(`https://api.giphy.com/v1/gifs/translate?api_key=nABXfIhthoUvN8e93XVl1yEpQi43vwDg&s=${searchQuery}`, {mode: 'cors'})
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                console.log(response)
+                img.src = response.data.images.original.url
+            })
+            .catch(function(error) {
+                console.log(error)
+                console.error(error)
+            })
+        }
+        const img = document.querySelector('img')
+        fetchNewImage('cats');
+
+        const generateNewImageButton = document.querySelector('#generate-new-image');
+        generateNewImageButton.addEventListener('click', fetchNewImage('cats'))
+
+        const searchNewGifButton = document.querySelector('#search-new-gif');
+        searchNewGifButton.addEventListener('click', () => {
+            const searchQuery = document.querySelector('#search-query').value;
+            fetchNewImage(searchQuery)
+        })
+    </script>
+
+    
+</body>
+</html>
